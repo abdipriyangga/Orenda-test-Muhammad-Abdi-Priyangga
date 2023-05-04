@@ -1,15 +1,23 @@
-import express, { Express, Request, Response } from "express";
+
 import dotenv from "dotenv";
-
 dotenv.config();
+import express from "express"
+import bodyParser from "body-parser";
+import { customerRouter } from './src/customer';
+import { productsRouter } from "./src/products";
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const app = express()
+app.use(express.json())
 
-const app: Express = express();
-const port = process.env.PORT;
+const PORT = process.env.PORT
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.listen(PORT, () => console.log(`⚡️[server]: Server is running on port ${PORT}`))
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server1");
-});
+app.get('/', (req, res) => {
+    res.send('Welcome to API Orenda Test!')
+})
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
-});
+app.use("/customers", customerRouter)
+app.use("/products", productsRouter)
