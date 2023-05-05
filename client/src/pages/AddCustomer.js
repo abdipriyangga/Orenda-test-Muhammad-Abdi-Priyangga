@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import { useNavigate } from 'react-router-dom/dist';
+import axios from 'axios';
 
 const AddCustomer = () => {
     const navigate = useNavigate();
     const navigateToHome = () => {
         navigate('/')
     }
+    const handleSubmitCreate = (e) => {
+        e.preventDefault()
+        axios.post("http://localhost:8000/customers", {name, phone, email, address}).then((response) => {
+            console.log(response)
+        }).catch((error) => {
+            return error
+        })
+    }
+    const [name, setName] = useState()
+    const [phone, setPhone] = useState()
+    const [email, setEmail] = useState()
+    const [address, setAddress] = useState()
     return (
         <>
             <main className='flex'>
@@ -26,7 +39,7 @@ const AddCustomer = () => {
                         <div className='flex justify-between'>
                             <h2 className='text-black text-lg font-bold'>Customer Information</h2>
                         </div>
-                        <form class="w-full max-w-5xlxl mt-10">
+                        <form class="w-full max-w-5xlxl mt-10" method="post" onSubmit={handleSubmitCreate}>
                             <div className='flex w-full'>
                                 <div className='w-full'>
                                     <div className="flex flex-wrap -mx-3 mb-6">
@@ -34,7 +47,7 @@ const AddCustomer = () => {
                                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                                                 Customer Name
                                             </label>
-                                            <input className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Customer name" />
+                                            <input className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="Customer name" value={name} onChange={e => setName(e.target.value)} />
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap -mx-3 mb-6">
@@ -42,13 +55,13 @@ const AddCustomer = () => {
                                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                                                 Phone Number
                                             </label>
-                                            <input className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Phone number" />
+                                            <input className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Phone number" value={phone} onChange={e => setPhone(e.target.value)} />
                                         </div>
                                         <div className="w-full md:w-1/2 px-3">
                                             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                                                 Email Address
                                             </label>
-                                            <input className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="email" placeholder="doe@example.com" />
+                                            <input className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="email" placeholder="doe@example.com" value={email} onChange={e => setEmail(e.target.value)} />
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +70,7 @@ const AddCustomer = () => {
                                         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
                                             Address
                                         </label>
-                                        <input className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="textarea" placeholder="Address" />
+                                        <input className="appearance-none block w-full bg-gray-200 text-gray-500 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="textarea" placeholder="Address" value={address} onChange={e => setAddress(e.target.value)} />
                                     </div>
                                 </div>
                             </div>
