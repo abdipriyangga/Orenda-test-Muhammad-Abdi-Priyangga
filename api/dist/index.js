@@ -9,9 +9,11 @@ const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const customer_1 = require("./src/customer");
 const products_1 = require("./src/products");
+const orders_1 = require("./src/orders");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const app = (0, express_1.default)();
+const cors = require("cors");
 app.use(express_1.default.json());
 const PORT = process.env.PORT;
 app.use(express_1.default.json());
@@ -20,5 +22,7 @@ app.listen(PORT, () => console.log(`⚡️[server]: Server is running on port ${
 app.get('/', (req, res) => {
     res.send('Welcome to API Orenda Test!');
 });
+app.use(cors());
 app.use("/customers", customer_1.customerRouter);
 app.use("/products", products_1.productsRouter);
+app.use("/order", orders_1.ordersRouter);
